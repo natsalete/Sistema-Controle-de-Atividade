@@ -112,7 +112,7 @@ $(document).ready(function() {
     $('#filtro-periodo').change(function() {
         const curso = $('#filtro-curso').val();
         const periodo = $(this).val();
-
+    
         $.ajax({
             url: '?page=visualizacao&action=obter_notas',
             method: 'GET',
@@ -122,10 +122,21 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function(response) {
-                // Limpar view atual
+                console.log('Dados recebidos:', response); // Debug
+                
                 $('#notas-view').empty();
-
-                // Agrupar por matéria e calcular média
+                
+                if (response.error) {
+                    $('#notas-view').html(`<p class="error">${response.error}</p>`);
+                    return;
+                }
+                
+                if (response.length === 0) {
+                    $('#notas-view').html('<p>Nenhuma nota encontrada para este período.</p>');
+                    return;
+                }
+    
+                // Agrupar por matéria
                 const notasPorMateria = {};
                 
                 response.forEach(function(nota) {
@@ -141,7 +152,7 @@ $(document).ready(function() {
                         nota: nota.nota
                     });
                 });
-
+    
                 // Renderizar na tela
                 Object.keys(notasPorMateria).forEach(function(materia) {
                     const materiaData = notasPorMateria[materia];
@@ -149,12 +160,12 @@ $(document).ready(function() {
                     const materiaHtml = `
                         <div class="materia-card">
                             <h3>${materia}</h3>
-                            <p class="media">Média: ${materiaData.media.toFixed(1)}</p>
+                            <p class="media">Média: ${Number(materiaData.media).toFixed(1)}</p>
                             <div class="atividades-list">
                                 ${materiaData.atividades.map(ativ => `
                                     <div class="atividade-item">
                                         <span>${ativ.nome_atividade}</span>
-                                        <span>${ativ.nota.toFixed(1)}</span>
+                                        <span>${Number(ativ.nota).toFixed(1)}</span>
                                     </div>
                                 `).join('')}
                             </div>
@@ -164,8 +175,9 @@ $(document).ready(function() {
                     $('#notas-view').append(materiaHtml);
                 });
             },
-            error: function() {
-                alert('Erro ao buscar notas');
+            error: function(xhr, status, error) {
+                console.error('Erro na requisição:', error);
+                $('#notas-view').html('<p class="error">Erro ao carregar as notas. Por favor, tente novamente.</p>');
             }
         });
     });
