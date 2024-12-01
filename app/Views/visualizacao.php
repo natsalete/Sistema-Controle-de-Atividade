@@ -13,6 +13,7 @@
         <div class="links">
             <a href="?page=cadastro" class="nav-link">Cadastrar</a>
             <a href="?page=visualizacao" class="nav-link">Visualizar</a>
+            <a href="?page=admin" class="nav-link">Área Administrativa</a>
         </div>
     </aside>
 
@@ -20,11 +21,8 @@
         <div class="notas-container">
             <h2>NOTAS CADASTRADAS</h2>
             <div id="filtros">
-                <select id="filtro-curso" required>
-                    <option value="" disabled selected>Filtrar por curso...</option>
-                    <option value="ads">Análise e Desenvolvimento de Sistema</option>
-                    <option value="gestao">Gestão comercial</option>
-                    <option value="engenharia">Engenharia Elétrica</option>
+                <select id="filtro-curso">
+                    <option value="" disabled selected>Selecione um curso...</option>
                 </select>
                 <select id="filtro-periodo" required disabled>
                     <option value="" disabled selected>Filtrar por período...</option>

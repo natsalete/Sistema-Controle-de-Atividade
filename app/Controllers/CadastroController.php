@@ -18,7 +18,7 @@ class CadastroController {
             try {
                 $stmt = $this->conn->prepare("CALL cadastrar_atividade(?, ?, ?, ?, ?)");
                 $stmt->execute([
-                    $this->mapCurso($curso), 
+                    $curso, 
                     $periodo, 
                     $materia, 
                     $nome_atividade, 
@@ -30,14 +30,5 @@ class CadastroController {
                 echo json_encode(['status' => 'error', 'message' => 'Erro ao cadastrar atividade: ' . $e->getMessage()]);
             }
         }
-    }
-
-    private function mapCurso($curso) {
-        $cursos = [
-            'ads' => 'Análise e Desenvolvimento de Sistemas',
-            'gestao' => 'Gestão Comercial',
-            'engenharia' => 'Engenharia Elétrica'
-        ];
-        return $cursos[$curso] ?? $curso;
     }
 }

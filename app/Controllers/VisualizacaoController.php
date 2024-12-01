@@ -10,7 +10,6 @@ class VisualizacaoController {
     public function obterNotas() {
         $curso = $_GET['curso'] ?? '';
         $periodo = $_GET['periodo'] ?? '';
-        $curso = $this->mapCurso($curso);
 
         try {
             $stmt = $this->conn->prepare("CALL recuperar_notas(?, ?)");
@@ -21,14 +20,5 @@ class VisualizacaoController {
         } catch(PDOException $e) {
             echo json_encode(['error' => $e->getMessage()]);
         }
-    }
-
-    private function mapCurso($curso) {
-        $cursos = [
-            'ads' => 'Análise e Desenvolvimento de Sistemas',
-            'gestao' => 'Gestão Comercial',
-            'engenharia' => 'Engenharia Elétrica'
-        ];
-        return $cursos[$curso] ?? $curso;
     }
 }

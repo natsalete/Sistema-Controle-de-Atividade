@@ -1,4 +1,29 @@
 $(document).ready(function() {
+
+    function carregarCursos() {
+        $.ajax({
+            url: '?page=ajax&action=buscar_cursos',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                $('#curso, #filtro-curso').empty()
+                    .append('<option value="" disabled selected>Selecione um curso...</option>');
+                
+                response.forEach(function(curso) {
+                    $('#curso, #filtro-curso').append(
+                        `<option value="${curso.nome_curso}">${curso.nome_curso}</option>`
+                    );
+                });
+            },
+            error: function() {
+                alert('Erro ao carregar cursos');
+            }
+        });
+    }
+
+    // Chamar no início para popular os cursos
+    carregarCursos();
+    
     // Função para popular os períodos baseado no curso selecionado
     function atualizarPeriodos(cursoSelecionado, selectElement) {
         const select = selectElement || '#periodo';

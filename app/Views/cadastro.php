@@ -13,6 +13,7 @@
         <div class="links">
             <a href="?page=cadastro" class="nav-link">Cadastrar</a>
             <a href="?page=visualizacao" class="nav-link">Visualizar</a>
+            <a href="?page=admin" class="nav-link">Área Administrativa</a>
         </div>
     </aside>
 
@@ -20,11 +21,8 @@
         <div class="atividade">
             <h2>CADASTRAR ATIVIDADE</h2>
             <form id="form-cadastro">
-                <select name="curso" id="curso" required>
+                <select id="curso">
                     <option value="" disabled selected>Selecione um curso...</option>
-                    <option value="ads">Análise e Desenvolvimento de Sistema</option>
-                    <option value="gestao">Gestão comercial</option>
-                    <option value="engenharia">Engenharia Elétrica</option>
                 </select>
                 <select name="periodo" id="periodo" required disabled>
                     <option value="" disabled selected>Selecione um período...</option>
